@@ -73,7 +73,7 @@ public class Login {
                 d.errorPasswordLength();
                 passwordEntry.setText("");
             } else {
-                Database database = new Database();
+                DatabaseFunction database = new DatabaseFunction();
                 if (database.validation(username, password)) { // Validates user details
                     Arrays.fill(password, '\0');
                     Home home = new Home();

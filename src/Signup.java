@@ -112,7 +112,7 @@ public class Signup {
             email = emailEntry.getText();
             phone = phoneEntry.getText();
             ErrorDialog d = new ErrorDialog();
-            Database database = new Database();
+            DatabaseFunction database = new DatabaseFunction();
             if (username.isEmpty() || address.isEmpty() || email.isEmpty() || phone.isEmpty() || Arrays.equals(password, "".toCharArray()) || Arrays.equals(confPassword, "".toCharArray())) { // throws error if any one field is empty
                 d.signupEmpty();
             } else if (!database.checkUsernameAvailability(username)) { // Checks username availability, throws error if unavailable

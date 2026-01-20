@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Objects;
 
-public class Database {
+public class DatabaseFunction {
     Connection conn = DBConnection.getInstance().getConnection();
 
     public void sendSignupData(String username, char[] password, String address, String email, String phone) {

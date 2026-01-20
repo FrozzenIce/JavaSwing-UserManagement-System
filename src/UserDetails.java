@@ -17,7 +17,7 @@ public class UserDetails {
         gbc.insets = new Insets(5, 10, 3, 10);
 
         // Fetch user details from db
-        Database database = new Database();
+        DatabaseFunction database = new DatabaseFunction();
         User user = database.fetchUserDetails(appUsername);
 
         // Labels

@@ -119,7 +119,7 @@ public class EditUser {
             }
             password = passwordEntry.getPassword();
             ErrorDialog dialog = new ErrorDialog();
-            Database database = new Database();
+            DatabaseFunction database = new DatabaseFunction();
             if (database.validation(appUsername, password)) {
                 database.updateUserDetails(appUsername, username, address, email, phone);
                 usernameEntry.setText("");
