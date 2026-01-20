@@ -19,7 +19,6 @@ release.properties
 
 # Gradle
 .gradle/
-out/
 build/
 
 # OS files
