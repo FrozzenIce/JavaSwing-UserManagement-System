@@ -1,0 +1,34 @@
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# Compiled files
+*.class
+*.jar
+*.war
+*.ear
+
+# Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+release.properties
+
+# Gradle
+.gradle/
+out/
+build/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Other
+*.log
+.classpath
+.project
+.settings/
+config.properties
