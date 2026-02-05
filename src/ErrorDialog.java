@@ -40,4 +40,7 @@ public class ErrorDialog {
     public void databaseException(String message) {
         JOptionPane.showMessageDialog(null, "Database error (SQL Exception): " + message, "Signup Failure", JOptionPane.ERROR_MESSAGE);
     }
+    public void phoneLenError(){
+        JOptionPane.showMessageDialog(null, "Phone number cannot have less than 10 digits", "Signup Failure", JOptionPane.ERROR_MESSAGE);
+    }
 }

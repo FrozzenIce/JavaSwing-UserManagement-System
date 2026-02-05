@@ -17,7 +17,7 @@ public class Login {
 
         // Grid Bag Layout
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(5, 10, 3, 2);
+        gbc.insets = new Insets(5, 10, 3, 10);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
         // Labels

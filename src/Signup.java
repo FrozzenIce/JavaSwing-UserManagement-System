@@ -7,6 +7,7 @@ public class Signup {
     private String username, address, email, phone;
 
     public void signupApp() {
+
         // Frame
         JFrame frame = new JFrame("Project - Signup");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -17,7 +18,7 @@ public class Signup {
 
         // Grid Bag Layout
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(5, 10, 3, 2);
+        gbc.insets = new Insets(5, 10, 5, 10);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
         // Labels
@@ -37,7 +38,7 @@ public class Signup {
         JTextField phoneEntry = new JTextField(20);
 
         // Buttons
-        JButton loginBtn = new JButton("Login");
+        JButton backBtn = new JButton("Back");
         JButton signupBtn = new JButton("Sign up");
 
         // Add UsernameInsertion, GBC
@@ -82,22 +83,21 @@ public class Signup {
         gbc.gridx = 1;
         signupPanel.add(phoneEntry, gbc);
 
-        // Add LoginBtnInsertion, GBC
-        gbc.gridx = 0;
-        gbc.gridy = 6;
-        gbc.gridwidth = 2;
-        signupPanel.add(loginBtn, gbc);
-
         // Add SignupBtnInsertion, GBC
         gbc.gridx = 0;
-        gbc.gridy = 7;
+        gbc.gridy = 6;
         gbc.gridwidth = 2;
         gbc.anchor = GridBagConstraints.NORTH;
         signupPanel.add(signupBtn, gbc);
 
+        // Add LoginBtnInsertion, GBC
+        gbc.gridx = 0;
+        gbc.gridy = 7;
+        gbc.gridwidth = 2;
+        signupPanel.add(backBtn, gbc);
 
-        // loginBtn ActionListener
-        loginBtn.addActionListener(e -> {
+        // backBtn ActionListener
+        backBtn.addActionListener(e -> {
             frame.dispose();
             Login login = new Login();
             login.loginApp();
@@ -121,7 +121,9 @@ public class Signup {
                 d.errorPassSignup();
             } else if (!Arrays.equals(password, confPassword)) { // checks if entered password and confirmation password is correct
                 d.signupPassError();
-            } else { // Sends the entered details to the database
+            } else if(phone.trim().length()!= 10){
+                d.phoneLenError();
+            }else { // Sends the entered details to the database
                 database.sendSignupData(username, password, address, email, phone);
                 Login login = new Login();
                 frame.dispose();
