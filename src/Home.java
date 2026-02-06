@@ -4,7 +4,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Home{
-    public void homeApp(String username) {
+    public void homeApp(String appUsername) {
+        DatabaseFunction database = new DatabaseFunction();
+        String username = appUsername;
         // Frame
         JFrame frame = new JFrame("Project - Home");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -45,12 +47,12 @@ public class Home{
         homePanel.add(logoutBtn, gbc);
 
         // viewBtn ActionListener
+        String finalUsername = username;
         viewBtn.addActionListener(e -> {
             UserDetails userDetails = new UserDetails();
             frame.dispose();
-            userDetails.userDetailsApp(username);
+            userDetails.userDetailsApp(finalUsername);
         });
-
         // editBtn ActionListener
         editBtn.addActionListener(e -> {
             EditUser edit = new EditUser();

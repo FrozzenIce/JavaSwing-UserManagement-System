@@ -1,9 +1,9 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
-public class EditUser {
-    char[] password;
-    private String username, address, email, phone;
+public class EditUser extends ButtonFunctions {
 
     public void editUserApp(String appUsername) {
         // Frame
@@ -100,37 +100,20 @@ public class EditUser {
         editPanel.add(backBtn, gbc);
 
         // updateBtn ActionListener
-        updateBtn.addActionListener(_ -> {
-            username = usernameEntry.getText();
-            if (username.trim().isEmpty()) {
-                username = null;
+        KeyAdapter myEnterListener = new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    updateEvent(appUsername, usernameEntry, passwordEntry, addressEntry, emailEntry, phoneEntry, frame);
+                }
             }
-            address = addressEntry.getText();
-            if (address.trim().isEmpty()) {
-                address = null;
-            }
-            email = emailEntry.getText();
-            if (email.trim().isEmpty()) {
-                email = null;
-            }
-            phone = phoneEntry.getText();
-            if (phone.trim().isEmpty()) {
-                phone = null;
-            }
-            password = passwordEntry.getPassword();
-            ErrorDialog dialog = new ErrorDialog();
-            DatabaseFunction database = new DatabaseFunction();
-            if (database.validation(appUsername, password)) {
-                database.updateUserDetails(appUsername, username, address, email, phone);
-                usernameEntry.setText("");
-                passwordEntry.setText("");
-                addressEntry.setText("");
-                emailEntry.setText("");
-                phoneEntry.setText("");
-            } else {
-                dialog.updateFailed();
-            }
-        });
+        };
+        updateBtn.addActionListener(_ -> updateEvent(appUsername, usernameEntry, passwordEntry, addressEntry, emailEntry, phoneEntry, frame));
+        updateBtn.addKeyListener(myEnterListener);
+        passwordEntry.addKeyListener(myEnterListener);
+        addressEntry.addKeyListener(myEnterListener);
+        emailEntry.addKeyListener(myEnterListener);
+        phoneEntry.addKeyListener(myEnterListener);
 
         // backBtn ActionListener
         backBtn.addActionListener(_ -> {

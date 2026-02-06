@@ -1,10 +1,10 @@
 import javax.swing.*;
 import java.awt.*;
-import java.util.Arrays;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
-public class Login {
-    private String username;
-    private char[] password;
+
+public class Login extends ButtonFunctions{
 
     public void loginApp() {
         // Frame
@@ -60,39 +60,25 @@ public class Login {
         loginPanel.add(signupBtn, gbc);
 
 
-        // ActionListener loginBtn
-        loginBtn.addActionListener(e -> {
-            username = usernameEntry.getText();
-            password = passwordEntry.getPassword();
-            ErrorDialog d = new ErrorDialog();
-            if (username.isEmpty()) { // throws error if username is empty
-                d.errorEmptyUsername();
-            } else if (Arrays.equals(password, "".toCharArray())) { // throws error if password is empty
-                d.errorEmptyPassword();
-            } else if (password.length < 8) { // throws error if password length < 8
-                d.errorPasswordLength();
-                passwordEntry.setText("");
-            } else {
-                DatabaseFunction database = new DatabaseFunction();
-                if (database.validation(username, password)) { // Validates user details
-                    Arrays.fill(password, '\0');
-                    Home home = new Home();
-                    frame.dispose();
-                    home.homeApp(username);
-                } else { // throws login failure window
-                    d.loginFailure();
+        // Key/ActionListener loginBtn
+        KeyAdapter myEnterListener = new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    loginEvent(usernameEntry, passwordEntry, frame);
                 }
-                usernameEntry.setText("");
-                passwordEntry.setText("");
             }
-        });
-
+        };
+        loginBtn.addActionListener(_ -> loginEvent(usernameEntry, passwordEntry, frame));
+        usernameEntry.addKeyListener(myEnterListener);
+        passwordEntry.addKeyListener(myEnterListener);
         // ActionListener signupBtn
-        signupBtn.addActionListener(e -> {
+        signupBtn.addActionListener(_ -> {
             frame.dispose();
             Signup signup = new Signup();
             signup.signupApp();
         });
+
 
         //Frame window
         frame.pack();

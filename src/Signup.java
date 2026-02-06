@@ -1,10 +1,9 @@
 import javax.swing.*;
 import java.awt.*;
-import java.util.Arrays;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
-public class Signup {
-    char[] password, confPassword;
-    private String username, address, email, phone;
+public class Signup extends ButtonFunctions {
 
     public void signupApp() {
 
@@ -97,39 +96,28 @@ public class Signup {
         signupPanel.add(backBtn, gbc);
 
         // backBtn ActionListener
-        backBtn.addActionListener(e -> {
+        backBtn.addActionListener(_ -> {
             frame.dispose();
             Login login = new Login();
             login.loginApp();
         });
 
         // signupBtn ActionListener
-        signupBtn.addActionListener(e -> {
-            username = usernameEntry.getText();
-            password = passwordEntry.getPassword();
-            confPassword = confirmPasswordEntry.getPassword();
-            address = addressEntry.getText();
-            email = emailEntry.getText();
-            phone = phoneEntry.getText();
-            ErrorDialog d = new ErrorDialog();
-            DatabaseFunction database = new DatabaseFunction();
-            if (username.isEmpty() || address.isEmpty() || email.isEmpty() || phone.isEmpty() || Arrays.equals(password, "".toCharArray()) || Arrays.equals(confPassword, "".toCharArray())) { // throws error if any one field is empty
-                d.signupEmpty();
-            } else if (!database.checkUsernameAvailability(username)) { // Checks username availability, throws error if unavailable
-                d.errorUsernameAvailability();
-            } else if (password.length < 8) { // shows error if password length < 8
-                d.errorPassSignup();
-            } else if (!Arrays.equals(password, confPassword)) { // checks if entered password and confirmation password is correct
-                d.signupPassError();
-            } else if(phone.trim().length()!= 10){
-                d.phoneLenError();
-            }else { // Sends the entered details to the database
-                database.sendSignupData(username, password, address, email, phone);
-                Login login = new Login();
-                frame.dispose();
-                login.loginApp();
+        KeyAdapter myEnterListener = new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    signupEvent(usernameEntry, passwordEntry, confirmPasswordEntry, addressEntry, emailEntry, phoneEntry, frame);
+                }
             }
-        });
+        };
+        signupBtn.addActionListener(_ -> signupEvent(usernameEntry, passwordEntry, confirmPasswordEntry, addressEntry, emailEntry, phoneEntry, frame));
+        usernameEntry.addKeyListener(myEnterListener);
+        passwordEntry.addKeyListener(myEnterListener);
+        confirmPasswordLabel.addKeyListener(myEnterListener);
+        addressEntry.addKeyListener(myEnterListener);
+        emailEntry.addKeyListener(myEnterListener);
+        passwordEntry.addKeyListener(myEnterListener);
 
         // Frame window
         frame.pack();
