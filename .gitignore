@@ -31,3 +31,5 @@ Thumbs.db
 .project
 .settings/
 config.propertiesemet
+config.properties
+*.properties
