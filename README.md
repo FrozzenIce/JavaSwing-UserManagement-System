@@ -106,7 +106,7 @@ CREATE DATABASE IF NOT EXISTS user_management_db;
 Example table:
 
 ```sql
-CREATE TABLE `project_java`.`userdetails` (
+CREATE TABLE `<YOUR_DATABASE_NAME>`.`userdetails` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `Username` VARCHAR(20) NOT NULL,
   `Password` VARCHAR(20) NOT NULL,
@@ -115,7 +115,6 @@ CREATE TABLE `project_java`.`userdetails` (
   `Phone` VARCHAR(10) NOT NULL,
   PRIMARY KEY (`ID`),
   UNIQUE INDEX `Username_UNIQUE` (`Username` ASC) VISIBLE);
-);
 ```
 
 > Table and column names must match the Java code exactly.
@@ -129,7 +128,7 @@ CREATE TABLE `project_java`.`userdetails` (
 In the **project root directory** (same level as `src/`):
 
 ```properties
-db.url=jdbc:mysql://localhost:3306/user_management_db
+db.url=jdbc:mysql://localhost:3306/<YOUR_DATABASE_NAME>
 db.user=root
 db.password=YOUR_PASSWORD_HERE
 ```
@@ -222,6 +221,7 @@ Remove any `Properties` loading if present.
 * `config.properties` is not auto-generated
 * Tables must be created manually
 * Names must match code exactly
+
 
 
 
