@@ -1,3 +1,4 @@
+
 # JavaSwing User Management System 🧩🗄️
 
 A Java Swing desktop application for basic user management backed by a MySQL database.
@@ -22,7 +23,7 @@ Make sure the following are installed:
 1. JDK 8 or higher
 2. MySQL Server (8.x recommended)
 3. MySQL Workbench
-4. MySQL Connector/J (JDBC Driver)
+4. [MySQL Connector/J (JDBC Driver)](https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-j-9.6.0.zip)
 
 ---
 
@@ -221,5 +222,6 @@ Remove any `Properties` loading if present.
 * `config.properties` is not auto-generated
 * Tables must be created manually
 * Names must match code exactly
+
 
 
