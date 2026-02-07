@@ -108,10 +108,15 @@ Search in the project for SQL queries:
 Example table:
 
 ```sql
-CREATE TABLE users (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(100),
-    password VARCHAR(100)
+CREATE TABLE `project_java`.`userdetail` (
+  `ID` INT NOT NULL AUTO_INCREMENT,
+  `Username` VARCHAR(20) NOT NULL,
+  `Password` VARCHAR(20) NOT NULL,
+  `Address` VARCHAR(45) NOT NULL,
+  `Email` VARCHAR(60) NOT NULL,
+  `Phone` VARCHAR(10) NOT NULL,
+  PRIMARY KEY (`ID`),
+  UNIQUE INDEX `Username_UNIQUE` (`Username` ASC) VISIBLE);
 );
 ```
 
@@ -218,3 +223,4 @@ Remove any `Properties` loading if present.
 * `config.properties` is not auto-generated
 * Tables must be created manually
 * Names must match code exactly
+
