@@ -100,15 +100,12 @@ CREATE DATABASE IF NOT EXISTS user_management_db;
 
 ### Create Tables
 
-Search in the project for SQL queries:
-
-* Press `Ctrl + Shift + F`
-* Look for `SELECT`, `INSERT`, `FROM`, `users`
+* Copy this exact code after creating a database to create a table
 
 Example table:
 
 ```sql
-CREATE TABLE `project_java`.`userdetail` (
+CREATE TABLE `project_java`.`userdetails` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `Username` VARCHAR(20) NOT NULL,
   `Password` VARCHAR(20) NOT NULL,
@@ -131,7 +128,7 @@ CREATE TABLE `project_java`.`userdetail` (
 In the **project root directory** (same level as `src/`):
 
 ```properties
-db.url=jdbc:mysql://localhost:3306/user_management_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+db.url=jdbc:mysql://localhost:3306/user_management_db
 db.username=root
 db.password=YOUR_PASSWORD_HERE
 ```
@@ -181,6 +178,7 @@ Search for:
 ```java
 DriverManager.getConnection
 ```
+in DBConnection
 
 ### Hard-code credentials
 
@@ -223,4 +221,5 @@ Remove any `Properties` loading if present.
 * `config.properties` is not auto-generated
 * Tables must be created manually
 * Names must match code exactly
+
 
