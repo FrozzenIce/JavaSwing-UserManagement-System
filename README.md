@@ -142,7 +142,7 @@ Check for:
 
 ```java
 getProperty("db.url")
-getProperty("db.username")
+getProperty("db.user")
 getProperty("db.password")
 ```
 
@@ -222,6 +222,7 @@ Remove any `Properties` loading if present.
 * `config.properties` is not auto-generated
 * Tables must be created manually
 * Names must match code exactly
+
 
 
 
