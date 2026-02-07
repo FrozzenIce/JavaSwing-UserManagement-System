@@ -11,9 +11,7 @@ public class User {
         this.phone = phone;
     }
 
-    public String getUsername() {
-        return username;
-    }
+    public String getUsername() { return username; }
 
     public String getAddress() {
         return address;

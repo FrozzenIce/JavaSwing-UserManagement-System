@@ -99,25 +99,6 @@ public class DatabaseFunction {
         }
         return null;
     }
-    public String getUsername(String username) {
-        String sendUsername = "null";
-        String query = """
-                SELECT *FROM userdetails WHERE Username = ?""";
-        try (PreparedStatement pstmt = conn.prepareStatement(query)) {
-            pstmt.setString(1, username);
-            ResultSet rs = pstmt.executeQuery();
-
-            if (rs.next()) {
-                sendUsername = rs.getString("Username");
-            }
-            else return null;
-        } catch (SQLException e) {
-            ErrorDialog errorDialog = new ErrorDialog();
-            errorDialog.databaseException(e.getMessage());
-            System.out.println("Database error: " + e.getMessage());
-        }
-        return sendUsername;
-    }
 
     public void updateUserDetails(String appUsername, String username, String address, String email, String phone) {
         String query = """
@@ -139,6 +120,20 @@ public class DatabaseFunction {
             ErrorDialog errorDialog = new ErrorDialog();
             errorDialog.databaseException(e.getMessage());
             System.err.println("Database Error: " + e.getMessage());
+        }
+    }
+
+    public boolean deleteUser(String username) {
+        String query = "DELETE FROM userdetails WHERE Username = ?;";
+        try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setString(1, username);
+            int rows = pstmt.executeUpdate();
+            return rows > 0;
+        } catch (SQLException e) {
+            ErrorDialog errorDialog = new ErrorDialog();
+            errorDialog.databaseException(e.getMessage());
+            System.err.println("Database Error: " + e.getMessage());
+            return false;
         }
     }
 }

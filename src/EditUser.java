@@ -1,131 +1,208 @@
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-public class EditUser extends ButtonFunctions {
+public class EditUser extends JFrame {
+    private JTextField usernameEntry;
+    private JPasswordField passwordEntry;
+    private JTextField addressEntry;
+    private JTextField emailEntry;
+    private JTextField phoneEntry;
 
-    public void editUserApp(String appUsername) {
-        // Frame
-        JFrame frame = new JFrame("Project - Edit User Details");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    private JButton updateBtn;
+    private JButton backBtn;
 
-        // Panels
-        JPanel editPanel = new JPanel(new GridBagLayout());
-        frame.add(editPanel);
+    // This is the currently logged-in username (the one passed from Home)
+    private String appUsername;
 
-        // Grid Bag Layout
+    private static final Color ACCENT = new Color(172, 110, 142);
+    private static final Color PINK = Color.decode("#ea077c");
+    private static final Color WHITE = Color.WHITE;
+
+    private static final Font TITLE_FONT = new Font("Ubuntu", Font.BOLD, 11);
+    private static final Font BTN_FONT = new Font("Roboto", Font.BOLD, 11);
+
+    public EditUser(String username) {
+        this.appUsername = username;
+
+        initFrame();
+        initComponent();
+        preloadUserDetails();
+        layoutInit();
+    }
+
+    private void initFrame() {
+        setTitle("Edit - UMS");
+        setResizable(false);
+        setSize(360, 520);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+    }
+
+    private void initComponent() {
+        Border line = BorderFactory.createLineBorder(ACCENT, 1, true);
+        Border padding = BorderFactory.createEmptyBorder(5, 8, 5, 8);
+
+        usernameEntry = new JTextField(20);
+        usernameEntry.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createTitledBorder(line, " Username ", 0, 0, TITLE_FONT, ACCENT),
+                padding
+        ));
+
+        passwordEntry = new JPasswordField(20);
+        passwordEntry.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createTitledBorder(line, " Password (confirm) ", 0, 0, TITLE_FONT, ACCENT),
+                padding
+        ));
+
+        addressEntry = new JTextField(20);
+        addressEntry.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createTitledBorder(line, " Address ", 0, 0, TITLE_FONT, ACCENT),
+                padding
+        ));
+
+        emailEntry = new JTextField(20);
+        emailEntry.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createTitledBorder(line, " Email ", 0, 0, TITLE_FONT, ACCENT),
+                padding
+        ));
+
+        phoneEntry = new JTextField(20);
+        phoneEntry.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createTitledBorder(line, " Phone ", 0, 0, TITLE_FONT, ACCENT),
+                padding
+        ));
+
+        backBtn = new JButton("BACK");
+        backBtn.setForeground(WHITE);
+        backBtn.setBackground(PINK);
+        backBtn.setFont(BTN_FONT);
+        backBtn.setFocusPainted(false);
+        backBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+        updateBtn = new JButton("UPDATE");
+        updateBtn.setForeground(WHITE);
+        updateBtn.setBackground(PINK);
+        updateBtn.setFont(BTN_FONT);
+        updateBtn.setFocusPainted(false);
+        updateBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }
+
+    private void preloadUserDetails() {
+        DatabaseFunction db = new DatabaseFunction();
+        User user = db.fetchUserDetails(appUsername);
+
+        if (user == null) {
+            usernameEntry.setText(appUsername);
+            return;
+        }
+
+        usernameEntry.setText(user.getUsername());
+        addressEntry.setText(user.getAddress());
+        emailEntry.setText(user.getEmail());
+        phoneEntry.setText(user.getPhone());
+    }
+
+    private void layoutInit() {
+        JPanel panel = new JPanel(new GridBagLayout());
+        panel.setBackground(WHITE);
+
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(5, 10, 3, 5);
+        gbc.insets = new Insets(5, 10, 5, 10);
         gbc.fill = GridBagConstraints.HORIZONTAL;
-
-        // Labels
-        JLabel noteLabel = new JLabel("<html>Only fill data that is to be updated, fields with <span style='color:red'>*</span> must be filled</html>");
-        JLabel usernameLabel = new JLabel("Username: ");
-        JLabel addressLabel = new JLabel(("Address: "));
-        JLabel phoneLabel = new JLabel("Phone no.: ");
-        JLabel emailLabel = new JLabel("Email: ");
-        JLabel changePasswordLabel = new JLabel("<html>Enter Password <span style='color:red'>*</span></html>");
-        JLabel passwordLabel = new JLabel("Password: ");
-
-
-        // TextFields
-        JTextField usernameEntry = new JTextField(20);
-        JTextField addressEntry = new JTextField(30);
-        JTextField emailEntry = new JTextField(20);
-        JTextField phoneEntry = new JTextField(20);
-        JPasswordField passwordEntry = new JPasswordField(20);
-
-        // Buttons
-        JButton updateBtn = new JButton("Update");
-        JButton backBtn = new JButton("Back");
-
-        // Add NoteLabel, gbc
         gbc.gridx = 0;
         gbc.gridy = 0;
-        editPanel.add(noteLabel, gbc);
-
-        // Add UsernameInsertion, GBC
-        gbc.gridy = 1;
-        editPanel.add(usernameLabel, gbc);
-        gbc.gridx = 1;
-        editPanel.add(usernameEntry, gbc);
-
-
-        // Add AddressInsertion, GBC
-        gbc.gridx = 0;
-        gbc.gridy = 2;
-        editPanel.add(addressLabel, gbc);
-        gbc.gridx = 1;
-        editPanel.add(addressEntry, gbc);
-
-        // Add EmailInsertion, GBC
-        gbc.gridx = 0;
-        gbc.gridy = 3;
-        editPanel.add(emailLabel, gbc);
-        gbc.gridx = 1;
-        editPanel.add(emailEntry, gbc);
-
-        // Add PhoneInsertion, GBC
-        gbc.gridx = 0;
-        gbc.gridy = 4;
-        editPanel.add(phoneLabel, gbc);
-        gbc.gridx = 1;
-        editPanel.add(phoneEntry, gbc);
-
-        // Add ChangePasswordLabel, GBC
-        gbc.gridx = 0;
-        gbc.gridy = 5;
-        editPanel.add(changePasswordLabel, gbc);
-
-        // Add OldPasswordInsertion, GBC
-        gbc.gridx = 0;
-        gbc.gridy = 6;
-        editPanel.add(passwordLabel, gbc);
-        gbc.gridx = 1;
-        editPanel.add(passwordEntry, gbc);
-
-
-        // Add LoginBtnInsertion, GBC
-        gbc.gridx = 0;
-        gbc.gridy = 7;
         gbc.gridwidth = 2;
-        editPanel.add(updateBtn, gbc);
 
-        // Add SignupBtnInsertion, GBC
-        gbc.gridx = 0;
-        gbc.gridy = 8;
+        JLabel header = new JLabel("EDIT USER");
+        header.setFont(new Font("Roboto", Font.BOLD, 16));
+        header.setForeground(PINK);
+        header.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
+        panel.add(header, gbc);
+
+        gbc.gridy++;
         gbc.gridwidth = 2;
+        panel.add(usernameEntry, gbc);
+
+        gbc.gridy++;
+        panel.add(passwordEntry, gbc);
+
+        gbc.gridy++;
+        panel.add(addressEntry, gbc);
+
+        gbc.gridy++;
+        panel.add(emailEntry, gbc);
+
+        gbc.gridy++;
+        panel.add(phoneEntry, gbc);
+
+        gbc.gridy++;
         gbc.anchor = GridBagConstraints.NORTH;
-        editPanel.add(backBtn, gbc);
+        panel.add(updateBtn, gbc);
 
-        // updateBtn ActionListener
-        KeyAdapter myEnterListener = new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    updateEvent(appUsername, usernameEntry, passwordEntry, addressEntry, emailEntry, phoneEntry, frame);
-                }
-            }
-        };
-        updateBtn.addActionListener(_ -> updateEvent(appUsername, usernameEntry, passwordEntry, addressEntry, emailEntry, phoneEntry, frame));
-        updateBtn.addKeyListener(myEnterListener);
+        gbc.gridy++;
+        panel.add(backBtn, gbc);
+
+        // Actions
+        backBtn.addActionListener(_ -> {
+            this.dispose();
+            new Home(appUsername);
+        });
+
+        updateBtn.addActionListener(_ -> updateEvent());
+
+        // Enter key triggers
+        usernameEntry.addKeyListener(myEnterListener);
         passwordEntry.addKeyListener(myEnterListener);
         addressEntry.addKeyListener(myEnterListener);
         emailEntry.addKeyListener(myEnterListener);
         phoneEntry.addKeyListener(myEnterListener);
 
-        // backBtn ActionListener
-        backBtn.addActionListener(_ -> {
-            frame.dispose();
-            Home home = new Home();
-            home.homeApp(appUsername);
-        });
+        JPanel root = new JPanel(new BorderLayout());
+        root.setBackground(WHITE);
+        root.add(panel, BorderLayout.CENTER);
 
-        // Frame window
-        frame.pack();
-        frame.setResizable(false);
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
+        setContentPane(root);
+        setVisible(true);
+    }
+
+    private final KeyAdapter myEnterListener = new KeyAdapter() {
+        @Override
+        public void keyPressed(KeyEvent e) {
+            if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                updateEvent();
+            }
+        }
+    };
+
+    private void updateEvent() {
+        String newUsername = usernameEntry.getText().trim();
+        String newAddress = addressEntry.getText().trim();
+        String newEmail = emailEntry.getText().trim();
+        String newPhone = phoneEntry.getText().trim();
+        char[] password = passwordEntry.getPassword();
+
+        if (newUsername.isEmpty()) newUsername = null;
+        if (newAddress.isEmpty()) newAddress = null;
+        if (newEmail.isEmpty()) newEmail = null;
+        if (newPhone.isEmpty()) newPhone = null;
+
+        ErrorDialog dialog = new ErrorDialog();
+        DatabaseFunction db = new DatabaseFunction();
+
+        if (!db.validation(appUsername, password)) {
+            dialog.updateFailed();
+            return;
+        }
+
+        db.updateUserDetails(appUsername, newUsername, newAddress, newEmail, newPhone);
+        new MessageDialog().updateSuccess();
+
+        String finalUsername = (newUsername != null) ? newUsername : appUsername;
+
+        this.dispose();
+        new Home(finalUsername);
     }
 }
