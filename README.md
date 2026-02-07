@@ -130,7 +130,7 @@ In the **project root directory** (same level as `src/`):
 
 ```properties
 db.url=jdbc:mysql://localhost:3306/user_management_db
-db.username=root
+db.user=root
 db.password=YOUR_PASSWORD_HERE
 ```
 
@@ -222,6 +222,7 @@ Remove any `Properties` loading if present.
 * `config.properties` is not auto-generated
 * Tables must be created manually
 * Names must match code exactly
+
 
 
 
